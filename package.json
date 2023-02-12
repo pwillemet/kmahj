@@ -1,15 +1,34 @@
 {
   "name": "kmahj",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
+  "files": [
+    "dist"
+  ],
+  "module": "./dist/kmahj.js",
+  "exports": {
+    ".": {
+      "import": "./dist/kmahj.js"
+    },
+    "./core": {
+      "import": "./dist/core.js"
+    },
+    "./parser": {
+      "import": "./dist/parser.js"
+    },
+    "./resolver": {
+      "import": "./dist/resolver.js"
+    }
+  },
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "test": "vitest --ui"
   },
   "devDependencies": {
+    "@vitest/ui": "^0.28.4",
     "typescript": "^4.9.3",
-    "vite": "^4.1.0"
+    "vite": "^4.1.0",
+    "vitest": "^0.28.4"
   }
 }
