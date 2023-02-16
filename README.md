@@ -1,6 +1,9 @@
 # KMAHJ.JS
 
-Parse mahjong inputs and resolve hand scores for various rule set.
+Parse mahjong inputs and resolve hand scores for various rule sets.
+
+## Installation
+`npm i kmahj`
 
 ## Usage
 

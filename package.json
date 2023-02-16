@@ -1,5 +1,17 @@
 {
   "name": "kmahj",
+  "description": "Parse mahjong inputs and resolve hand scores for various rule sets",
+  "keywords": ["mahjong"],
+  "homepage": "https://github.com/pwillemet/kmahj",
+  "license": "MIT",
+  "author": {
+    "name": "Pierric WILLEMET",
+    "email": "pierric.willemet@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pwillemet/kmahj.git"
+  },
   "private": false,
   "version": "0.0.1",
   "type": "module",
