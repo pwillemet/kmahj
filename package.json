@@ -13,7 +13,7 @@
     "url": "https://github.com/pwillemet/kmahj.git"
   },
   "private": false,
-  "version": "0.0.4",
+  "version": "0.0.5",
   "type": "module",
   "files": [
     "dist"
@@ -33,10 +33,24 @@
       "import": "./dist/resolver.js"
     }
   },
-  "types": "dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/index.d.ts"
+      ],
+      "core": [
+        "./dist/core/index.d.ts"
+      ],
+      "parser": [
+        "./dist/parser/index.d.ts"
+      ],
+      "resolver": [
+        "./dist/resolver/index.d.ts"
+      ]
+    }
+  },
   "scripts": {
-    "build": "tsc && vite build",
-    "types": "tsc --emitDeclarationOnly",
+    "build": "tsc && vite build && tsc --emitDeclarationOnly",
     "test": "vitest --ui"
   },
   "devDependencies": {
