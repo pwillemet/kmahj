@@ -13,7 +13,7 @@
     "url": "https://github.com/pwillemet/kmahj.git"
   },
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "type": "module",
   "files": [
     "dist"
@@ -33,6 +33,7 @@
       "import": "./dist/resolver.js"
     }
   },
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc && vite build",
     "types": "tsc --emitDeclarationOnly",

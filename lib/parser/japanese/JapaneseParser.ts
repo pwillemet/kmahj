@@ -3,8 +3,8 @@ import { ParsedGroup, ParsedHand, Parser } from '../Parser.model'
 import { ParseError } from '../error'
 import { JapaneseModificator } from './japanese.model'
 
-export const GROUP_SEPARATOR = " ";
-export const WINNING_TILE_SEPARATOR = "+";
+const GROUP_SEPARATOR = " ";
+const WINNING_TILE_SEPARATOR = "+";
 const JAPANESE_TILES_DICTIONNARY = new Map<string, TileRef>([
   ["➀", getTileRef(TileCode.PIN_1)],
   ["➁", getTileRef(TileCode.PIN_2)],
