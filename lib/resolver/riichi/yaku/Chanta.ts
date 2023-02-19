@@ -21,7 +21,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Chanta", () => {
     const input = "123p 789p 111z 22z 999s"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Chanta.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -29,7 +29,7 @@ if (import.meta.vitest) {
 
   test("Not Chanta", () => {
     const input = "123p 789p 111z 22m 999s"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Chanta.checker(groups as ClassicHandPattern);expect(result).toBeFalsy();
   })

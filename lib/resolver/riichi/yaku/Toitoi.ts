@@ -15,7 +15,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Toitoi", () => {
     const input = "222s 333s 666s 888s 66m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Toitoi.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -23,7 +23,7 @@ if (import.meta.vitest) {
 
   test("Not Toitoi", () => {
     const input = "123s 333s 666s 888s 66m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Toitoi.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

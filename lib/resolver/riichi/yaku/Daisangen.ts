@@ -17,7 +17,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Daisangen", () => {
     const input = "111p 22p 555z 666z 777z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Daisangen.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -25,7 +25,7 @@ if (import.meta.vitest) {
 
   test("Not Daisangen", () => {
     const input = "111p 222p 555z 666z 77z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Daisangen.checker(groups as ClassicHandPattern);expect(result).toBeFalsy();
   })

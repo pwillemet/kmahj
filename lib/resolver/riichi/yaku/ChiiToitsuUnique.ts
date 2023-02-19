@@ -17,7 +17,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Chii Toitsu unique", () => {
     const input = "11p 22p 33p 44p 55p 66p 77p"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = ChiiToitsuUnique.checker(groups as ChiiToitsuHandPattern);
     expect(result).toBeTruthy();
@@ -25,7 +25,7 @@ if (import.meta.vitest) {
 
   test("Not Chii Toitsu non unique", () => {
     const input = "11p 22p 33p 44p 55p 66p 66p"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = ChiiToitsuUnique.checker(groups as ChiiToitsuHandPattern);expect(result).toBeFalsy();
   })

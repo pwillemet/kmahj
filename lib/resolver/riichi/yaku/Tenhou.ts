@@ -16,7 +16,7 @@ export const Tenhou: MixedYaku = {
 if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   const input = "234s 333s 666s 888s 66m"
-  const parsed = MpszParser(input);
+  const parsed = MpszParser.parse(input);
   const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
   test("Tenhou", () => {
     const result = Tenhou.checker(groups as ClassicHandPattern, { firstTurn: true } as RoundProps);

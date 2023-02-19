@@ -34,7 +34,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Chuuren Poutou", () => {
     const input = "111p 22p 345p 678p 999p"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = ChuurenPoutou.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -42,7 +42,7 @@ if (import.meta.vitest) {
 
   test("Not Chuuren Poutou", () => {
     const input = "111p 222p 345p 678p 99p"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = ChuurenPoutou.checker(groups as ClassicHandPattern);expect(result).toBeFalsy();
   })

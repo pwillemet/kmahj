@@ -17,7 +17,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Honroutou", () => {
     const input = "11p 99p 99m 11s 11z 22z 66z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Honroutou.checker(groups as ChiiToitsuHandPattern);
     expect(result).toBeTruthy();
@@ -25,7 +25,7 @@ if (import.meta.vitest) {
 
   test("Not Honroutou", () => {
     const input = "11p 99p 99m 11s 11z 22z 22s"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Honroutou.checker(groups as ChiiToitsuHandPattern);
     expect(result).toBeFalsy();

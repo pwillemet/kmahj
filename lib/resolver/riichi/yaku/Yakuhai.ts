@@ -43,7 +43,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Red", () => {
     const input = "222z 333z 444z 777z 11m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Red.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -51,7 +51,7 @@ if (import.meta.vitest) {
 
   test("Green", () => {
     const input = "222z 333z 444z 666z 11m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Green.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -59,7 +59,7 @@ if (import.meta.vitest) {
 
   test("White", () => {
     const input = "222z 333z 444z 555z 11m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = White.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -67,7 +67,7 @@ if (import.meta.vitest) {
 
   test("Player Wind", () => {
     const input = "222z 333m 444s 666z 11m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Green.checker(groups as ClassicHandPattern, { playerWind: 2 } as RoundProps);
     expect(result).toBeTruthy();
@@ -75,7 +75,7 @@ if (import.meta.vitest) {
 
   test("Round Wind", () => {
     const input = "222z 333m 444s 666z 11m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Green.checker(groups as ClassicHandPattern, { roundWind: 2 } as RoundProps);
     expect(result).toBeTruthy();

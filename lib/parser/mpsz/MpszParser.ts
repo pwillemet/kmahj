@@ -1,10 +1,10 @@
 import { Parser } from '../Parser.model'
-import { MpszFamily, MpszModificator } from './mpsz.model'
+import { MpszFamily, MpszModificator, MpszParsedTile } from './mpsz.model'
 import { getTileRef, MahjongTile, MahjongTileModificator, TileCode, TileNumberStr, TileRef } from '../../core'
 import { AKA_CHAR, GROUP_SEPARATOR, MPSZ_REGEX, WINNING_TILE_SEPARATOR } from './const'
 import { QUAD_SIZE } from '../../core'
 import { ParseError } from '../error'
-import { ParsedGroup, ParsedTile } from '../Parser.model'
+import { ParsedGroup } from '../Parser.model'
 
 const MPSZ_MODIFICATORS = Object.values(MpszModificator);
 const MPSZ_FAMILIES = Object.values(MpszFamily);
@@ -53,54 +53,59 @@ const MPDZ_MODIFICATORS_DICTIONNARY: Record<MpszModificator, MahjongTileModifica
   v: MahjongTileModificator.REVERTED
 }
 
-export const MpszParser: Parser = (input: string) => {
-  if (!MPSZ_REGEX.test(input)) throw new ParseError();
-  const prepared = prepareInput(input);
-  let k = 0;
-  const groups: ParsedGroup[] = [
-    { tiles: [] }
-  ];
-  let partialTiles: ParsedTile[] = [];
-  let winningFlag = false;
-  while (k < prepared.length) {
-    const char = prepared[k]
-    if (isNumber(char)) {
-      const tile = char === AKA_CHAR
-        ? {
-          number: TileNumberStr.FIVE,
-          modificators: [MpszModificator.AKA],
-          winning: winningFlag
-        }
-        : {
-          number: char,
-          modificators: [],
-          winning: winningFlag,
-        }
-      partialTiles.push(tile);
+export const MpszParser: Parser = {
+  canParse(input: string) {
+    return MPSZ_REGEX.test(input);
+  },
+  parse(input: string) {
+    if (!MPSZ_REGEX.test(input)) throw new ParseError();
+    const prepared = prepareInput(input);
+    let k = 0;
+    const groups: ParsedGroup[] = [
+      { tiles: [] }
+    ];
+    let partialTiles: MpszParsedTile[] = [];
+    let winningFlag = false;
+    while (k < prepared.length) {
+      const char = prepared[k]
+      if (isNumber(char)) {
+        const tile = char === AKA_CHAR
+          ? {
+            number: TileNumberStr.FIVE,
+            modificators: [MpszModificator.AKA],
+            winning: winningFlag
+          }
+          : {
+            number: char,
+            modificators: [],
+            winning: winningFlag,
+          }
+        partialTiles.push(tile);
+      }
+      if (isModificator(char)) {
+        const lastTile = partialTiles.at(-1);
+        if (lastTile == null) throw new ParseError();
+        lastTile.modificators.push(char);
+      }
+      if (isFamily(char)) {
+        if (partialTiles.length === 0) throw new ParseError();
+        const parsedTiles: MpszParsedTile[] = partialTiles.map(pt => ({ ...pt, family: char }));
+        const mahjongTiles = parsedTiles.map(pt => parsedTileToMahjongTile(pt, char));
+        groups.at(winningFlag ? 0 : -1)!.tiles.push(...mahjongTiles);
+        partialTiles = [];
+      }
+      if (isSpace(char)) {
+        if (partialTiles.length > 0) throw new ParseError();
+        groups.push({ tiles: [] });
+      }
+      if (isWinningTileSeparator(char)) {
+        winningFlag = true;
+      }
+      k++;
     }
-    if (isModificator(char)) {
-      const lastTile = partialTiles.at(-1);
-      if (lastTile == null) throw new ParseError();
-      lastTile.modificators.push(char);
-    }
-    if (isFamily(char)) {
-      if (partialTiles.length === 0) throw new ParseError();
-      const parsedTiles: ParsedTile[] = partialTiles.map(pt => ({ ...pt, family: char }));
-      const mahjongTiles = parsedTiles.map(pt => parsedTileToMahjongTile(pt, char));
-      groups.at(winningFlag ? 0 : -1)!.tiles.push(...mahjongTiles);
-      partialTiles = [];
-    }
-    if (isSpace(char)) {
-      if (partialTiles.length > 0) throw new ParseError();
-      groups.push({ tiles: [] });
-    }
-    if (isWinningTileSeparator(char)) {
-      winningFlag = true;
-    }
-    k++;
+    checkGroups(groups);
+    return { groups };
   }
-  checkGroups(groups);
-  return { groups };
 }
 
 function prepareInput(input: string): string {
@@ -129,10 +134,10 @@ function isWinningTileSeparator(input: string): input is typeof WINNING_TILE_SEP
   return input === WINNING_TILE_SEPARATOR;
 }
 
-function parsedTileToMahjongTile(parsedTile: ParsedTile, family: MpszFamily): MahjongTile {
+function parsedTileToMahjongTile(parsedTile: MpszParsedTile, family: MpszFamily): MahjongTile {
   const tile = MPSZ_TILES_DICTIONNARY.get(`${parsedTile.number}${family}`);
   if (tile == null) throw new ParseError("Unknown tile");
-  const modificators = parsedTile.modificators.map(m => MPDZ_MODIFICATORS_DICTIONNARY[m]);
+  const modificators = parsedTile.modificators.map((m: MpszModificator) => MPDZ_MODIFICATORS_DICTIONNARY[m]);
   if (parsedTile.winning) modificators.push(MahjongTileModificator.WINNING);
   return { tile, modificators };
 }

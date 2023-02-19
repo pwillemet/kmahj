@@ -21,7 +21,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Honitsu", () => {
     const input = "123p 345p 567p 999p 77z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Honitsu.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -29,7 +29,7 @@ if (import.meta.vitest) {
 
   test("Not Honitsu", () => {
     const input = "123p 345p 567p 999p 77p"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Honitsu.checker(groups as ClassicHandPattern);expect(result).toBeFalsy();
   })

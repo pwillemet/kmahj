@@ -17,7 +17,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Chinroutou", () => {
     const input = "111p 999p 111s 999m 11m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Chinroutou.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -25,7 +25,7 @@ if (import.meta.vitest) {
 
   test("Not Chinroutou", () => {
     const input = "111p 999p 111s 999m 11z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Chinroutou.checker(groups as ClassicHandPattern);expect(result).toBeFalsy();
   })

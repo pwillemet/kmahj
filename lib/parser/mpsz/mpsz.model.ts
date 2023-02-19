@@ -1,3 +1,5 @@
+import { TileNumberStr } from '../../core'
+
 export type MpszModificator = "^" | ">" | "<" | "v" | "*";
 export const MpszModificator = {
   AKA: '*' as MpszModificator, INCLINED1: '>' as MpszModificator,  INCLINED2: '<' as MpszModificator, SUPERPOSED: '^' as MpszModificator, REVERTED: "v" as MpszModificator
@@ -8,4 +10,10 @@ export const MpszFamily = {
   P: "p" as MpszFamily,
   S: "s" as MpszFamily,
   Z: "z" as MpszFamily
+}
+
+export type MpszParsedTile = {
+  number: TileNumberStr;
+  winning: boolean;
+  modificators: MpszModificator[];
 }

@@ -21,7 +21,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Ittsu", () => {
     const input = "123p 456p 789p 777s 11z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Ittsu.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -29,7 +29,7 @@ if (import.meta.vitest) {
 
   test("Not Ittsu", () => {
     const input = "111p 234p 567m 888p 99p 11z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Ittsu.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

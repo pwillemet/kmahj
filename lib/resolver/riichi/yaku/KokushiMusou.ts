@@ -19,14 +19,14 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Kokushi Musou", () => {
     const input = "19s19p19m12345677z";
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const result = KokushiMusou.checker(parsed.groups[0].tiles);
     expect(result).toBeTruthy();
   })
 
   test("Not Kokushi Musou", () => {
     const input = "29s19p19m12345677z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const result = KokushiMusou.checker(parsed.groups[0].tiles);
     expect(result).toBeFalsy();
   })

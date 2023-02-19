@@ -13,7 +13,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Tanyao", () => {
     const input = "234s 333s 666s 888s 66m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Tanyao.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -21,7 +21,7 @@ if (import.meta.vitest) {
 
   test("Not Tanyao", () => {
     const input = "123s 333s 666s 888s 66m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Tanyao.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

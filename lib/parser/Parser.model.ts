@@ -1,11 +1,4 @@
-import { MahjongTile, TileNumberStr } from '../core'
-import { MpszModificator } from './mpsz'
-
-export type ParsedTile = {
-  number: TileNumberStr;
-  modificators: MpszModificator[]
-  winning: boolean;
-}
+import { MahjongTile } from '../core'
 
 export type ParsedGroup = {
   tiles: MahjongTile[];
@@ -15,4 +8,7 @@ export type ParsedHand = {
   groups: ParsedGroup[];
 }
 
-export type Parser = (input: string) => ParsedHand;
+export type Parser = {
+  parse: (input: string) => ParsedHand;
+  canParse: (input: string) => boolean;
+}

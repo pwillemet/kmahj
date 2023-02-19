@@ -15,7 +15,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Sankantsu", () => {
     const input = "234s 2222p 6666s 8888s 66z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Sankantsu.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -23,7 +23,7 @@ if (import.meta.vitest) {
 
   test("Not Sankantsu", () => {
     const input = "234s 2222p 6666s 999s 66z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Sankantsu.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

@@ -41,7 +41,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Pinfu", () => {
     const input = "23p 789s 789s 789m 11m+1p"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Pinfu.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -49,7 +49,7 @@ if (import.meta.vitest) {
 
   test("Not Pinfu", () => {
     const input = "12p 789s 789s 789m 11m+3p"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Pinfu.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

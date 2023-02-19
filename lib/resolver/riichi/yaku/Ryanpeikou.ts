@@ -19,7 +19,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Ryanpeikou", () => {
     const input = "123p 123p 678s 678s 77z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Ryanpeikou.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -27,7 +27,7 @@ if (import.meta.vitest) {
 
   test("Not Ryanpeikou", () => {
     const input = "123p 123s 678p 678s 11m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Ryanpeikou.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

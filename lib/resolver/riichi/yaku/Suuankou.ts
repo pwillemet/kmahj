@@ -21,7 +21,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Suuankou", () => {
     const input = "6z 222s 333s 666s 888s +6z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Suuankou.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -29,7 +29,7 @@ if (import.meta.vitest) {
 
   test("Not Suuankou", () => {
     const input = "22s 333s 666s 999s 66z+2s"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Suuankou.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

@@ -19,7 +19,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Shousangen", () => {
     const input = "234s 234s 777z 555z 66z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Shousangen.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -27,7 +27,7 @@ if (import.meta.vitest) {
 
   test("Not Shousangen", () => {
     const input = "234s 234s 777s 555z 66m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Shousangen.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

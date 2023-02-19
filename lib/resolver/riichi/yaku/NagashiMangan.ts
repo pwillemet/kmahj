@@ -14,7 +14,7 @@ export const NagashiMangan: DiscardYaku = {
 if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   const input = "123z19p"
-  const parsed = MpszParser(input);
+  const parsed = MpszParser.parse(input);
   test("Nagashi Mangan", () => {
     const result = NagashiMangan.checker(parsed.groups[0].tiles, { discardTouched: false } as RoundProps);
     expect(result).toBeTruthy();

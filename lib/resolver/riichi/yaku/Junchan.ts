@@ -14,7 +14,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Junchan", () => {
     const input = "123p 789s 99s 789m 11m"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Junchan.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -22,7 +22,7 @@ if (import.meta.vitest) {
 
   test("Not Junchan", () => {
     const input = "123p 789s 99s 789m 11z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = Junchan.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

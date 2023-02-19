@@ -23,7 +23,7 @@ if (import.meta.vitest) {
   const { test, expect } = import.meta.vitest;
   test("Sanshoku Doukou", () => {
     const input = "222s 222p 222m 789s 66z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = SanshokuDoukou.checker(groups as ClassicHandPattern);
     expect(result).toBeTruthy();
@@ -31,7 +31,7 @@ if (import.meta.vitest) {
 
   test("Not Sanshoku Doukou", () => {
     const input = "222s 222p 22m 789s 66z"
-    const parsed = MpszParser(input);
+    const parsed = MpszParser.parse(input);
     const groups = parsed.groups.map(g => simpleParsedGroupToMahjongGroup(g));
     const result = SanshokuDoukou.checker(groups as ClassicHandPattern);
     expect(result).toBeFalsy();

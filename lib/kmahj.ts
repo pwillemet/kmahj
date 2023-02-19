@@ -11,8 +11,12 @@ export class Kmahj<T extends MahjongHand, P extends Object> {
     return this;
   }
 
+  canResolve(input: string): boolean {
+    return this.parser.canParse(input);
+  }
+
   resolve(input: string, roundProps?: P): T | null {
-    const parsed = this.parser(input);
+    const parsed = this.parser.parse(input);
     return this.resolver(parsed, roundProps);
   }
 
