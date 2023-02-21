@@ -48,7 +48,7 @@ __Parse tiles__
 import { MpszParser } from "kmahj/parser";
 
 const input = "456p 1>23p 345*>p 6v666vp 0>55m 6>6^66s";
-const parsed = MpszParser(input);
+const parsed = MpszParser.parse(input);
 ```
 
 Result
@@ -338,3 +338,47 @@ Result
   ]
 }
 ```
+
+## Supported syntaxes
+### MpszParser
+- Use tile numbers followed by a family character
+  - p : PIN
+  - m : MAN
+  - S : SOU
+  - z : ZIHAI (1234 for East-South-West-North, 567 for White-Green-Red)
+- Separate groups with a space
+- Add modificators after a tile number
+  - \> or < : Inclined
+  - ^ : Superposed
+  - v : Reverted
+  - \* : Aka (five only)
+- Add the winning tile at the end separated with a +
+
+Example : 1234p444m 5>67s 11>1^1s + 4p
+### JapaneseParser
+- Use tile specific characters
+  - ➀-➈ : PIN
+  - 一-九 : MAN
+  - 1-9 : SOU
+  - TN西北 : East, South, West, North
+  - R中白 : Green, Red, White
+- Separate groups with a space
+- Add modificators after a tile number
+    - \> or < : Inclined
+    - ^ : Superposed
+    - v : Reverted
+    - \* : Aka (five only)
+- Add the winning tile at the end separated with a +
+
+Example : ➀➁➂➃四四四 5>67 11>1^1 + ➃
+### UnicodeParser
+- Use specific unicode characters for mahjong tiles 🀀-🀪
+- Separate groups with a space
+- Add modificators after a tile number
+    - \> or < : Inclined
+    - ^ : Superposed
+    - v : Reverted
+    - \* : Aka (five only)
+- Add the winning tile at the end separated with a +
+
+Example : 🀙🀚🀛🀜🀊🀊🀊 🀔*>🀕🀖 🀐v🀐🀐🀐v + 🀜

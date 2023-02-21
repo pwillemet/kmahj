@@ -1,47 +1,56 @@
 import { getTileRef, MahjongTile, MahjongTileModificator, QUAD_SIZE, TileCode, TileRef } from '../../core'
 import { ParsedGroup, ParsedHand, Parser } from '../Parser.model'
 import { ParseError } from '../error'
-import { JapaneseModificator } from './japanese.model'
+import { UnicodeModificator } from './unicode.model'
 
 const GROUP_SEPARATOR = " ";
 const WINNING_TILE_SEPARATOR = "+";
-const JAPANESE_TILES_DICTIONNARY = new Map<string, TileRef>([
-  ["➀", getTileRef(TileCode.PIN_1)],
-  ["➁", getTileRef(TileCode.PIN_2)],
-  ["➂", getTileRef(TileCode.PIN_3)],
-  ["➃", getTileRef(TileCode.PIN_4)],
-  ["➄", getTileRef(TileCode.PIN_5)],
-  ["➅", getTileRef(TileCode.PIN_6)],
-  ["➆", getTileRef(TileCode.PIN_7)],
-  ["➇", getTileRef(TileCode.PIN_8)],
-  ["➈", getTileRef(TileCode.PIN_9)],
-  ["一", getTileRef(TileCode.MAN_1)],
-  ["二", getTileRef(TileCode.MAN_2)],
-  ["三", getTileRef(TileCode.MAN_3)],
-  ["四", getTileRef(TileCode.MAN_4)],
-  ["五", getTileRef(TileCode.MAN_5)],
-  ["六", getTileRef(TileCode.MAN_6)],
-  ["七", getTileRef(TileCode.MAN_7)],
-  ["八", getTileRef(TileCode.MAN_8)],
-  ["九", getTileRef(TileCode.MAN_9)],
-  ["1", getTileRef(TileCode.SEN_1)],
-  ["2", getTileRef(TileCode.SEN_2)],
-  ["3", getTileRef(TileCode.SEN_3)],
-  ["4", getTileRef(TileCode.SEN_4)],
-  ["5", getTileRef(TileCode.SEN_5)],
-  ["6", getTileRef(TileCode.SEN_6)],
-  ["7", getTileRef(TileCode.SEN_7)],
-  ["8", getTileRef(TileCode.SEN_8)],
-  ["9", getTileRef(TileCode.SEN_9)],
-  ["T", getTileRef(TileCode.EAST)],
-  ["N", getTileRef(TileCode.SOUTH)],
-  ["西", getTileRef(TileCode.WEST)],
-  ["北", getTileRef(TileCode.NORTH)],
-  ["白", getTileRef(TileCode.WHITE)],
-  ["R", getTileRef(TileCode.GREEN)],
-  ["中", getTileRef(TileCode.RED)],
+const UNICODE_TILES_DICTIONNARY = new Map<string, TileRef>([
+  ["🀙", getTileRef(TileCode.PIN_1)],
+  ["🀚", getTileRef(TileCode.PIN_2)],
+  ["🀛", getTileRef(TileCode.PIN_3)],
+  ["🀜", getTileRef(TileCode.PIN_4)],
+  ["🀝", getTileRef(TileCode.PIN_5)],
+  ["🀞", getTileRef(TileCode.PIN_6)],
+  ["🀟", getTileRef(TileCode.PIN_7)],
+  ["🀠", getTileRef(TileCode.PIN_8)],
+  ["🀡", getTileRef(TileCode.PIN_9)],
+  ["🀇", getTileRef(TileCode.MAN_1)],
+  ["🀈", getTileRef(TileCode.MAN_2)],
+  ["🀉", getTileRef(TileCode.MAN_3)],
+  ["🀊", getTileRef(TileCode.MAN_4)],
+  ["🀋", getTileRef(TileCode.MAN_5)],
+  ["🀌", getTileRef(TileCode.MAN_6)],
+  ["🀍", getTileRef(TileCode.MAN_7)],
+  ["🀎", getTileRef(TileCode.MAN_8)],
+  ["🀏", getTileRef(TileCode.MAN_9)],
+  ["🀐", getTileRef(TileCode.SEN_1)],
+  ["🀑", getTileRef(TileCode.SEN_2)],
+  ["🀒", getTileRef(TileCode.SEN_3)],
+  ["🀓", getTileRef(TileCode.SEN_4)],
+  ["🀔", getTileRef(TileCode.SEN_5)],
+  ["🀕", getTileRef(TileCode.SEN_6)],
+  ["🀖", getTileRef(TileCode.SEN_7)],
+  ["🀗", getTileRef(TileCode.SEN_8)],
+  ["🀘", getTileRef(TileCode.SEN_9)],
+  ["🀀", getTileRef(TileCode.EAST)],
+  ["🀁", getTileRef(TileCode.SOUTH)],
+  ["🀂", getTileRef(TileCode.WEST)],
+  ["🀃", getTileRef(TileCode.NORTH)],
+  ["🀆", getTileRef(TileCode.WHITE)],
+  ["🀅", getTileRef(TileCode.GREEN)],
+  ["🀄", getTileRef(TileCode.RED)],
+  ["🀢", getTileRef(TileCode.PLUM)],
+  ["🀣", getTileRef(TileCode.ORCHID)],
+  ["🀤", getTileRef(TileCode.BAMBOO)],
+  ["🀥", getTileRef(TileCode.CHRYSANTHEMUM)],
+  ["🀦", getTileRef(TileCode.SPRING)],
+  ["🀧", getTileRef(TileCode.SUMMER)],
+  ["🀨", getTileRef(TileCode.AUTUMN)],
+  ["🀩", getTileRef(TileCode.WINTER)],
+  ["🀪", getTileRef(TileCode.JOKER)],
 ]);
-const JAPANESE_MODIFICATORS_DICTIONNARY = new Map<JapaneseModificator, MahjongTileModificator>([
+const UNICODE_MODIFICATORS_DICTIONNARY = new Map<UnicodeModificator, MahjongTileModificator>([
   ["^", MahjongTileModificator.SUPERPOSED],
   [">", MahjongTileModificator.INCLINED],
   ["<", MahjongTileModificator.INCLINED],
@@ -49,14 +58,14 @@ const JAPANESE_MODIFICATORS_DICTIONNARY = new Map<JapaneseModificator, MahjongTi
   ["*", MahjongTileModificator.AKA],
 ])
 
-const JAPANESE_REGEX = /^(?:\s*(?:(?:[1-9➀-➈一二三四五六七八九N西北R中白][\^<>v]?|[5五➄]\*?[\^<>v]?\*?)*)+)+(?:\s*\+\s*(?:[1-9➀-➈一二三四五六七八九TN西北R中白]|[5五➄]\*?))?\s*$/i
+const UNICODE_REGEX = /^(?:\s*(?:(?:[🀙-🀪][\^<>v]?|[🀋🀔🀝]\*?[\^<>v]?\*?)*)+)+(?:\s*\+\s*(?:[🀙-🀅🀪]|[🀋🀔🀝]\*?))?\s*$/i
 
-export const JapaneseParser: Parser = {
+export const UnicodeParser: Parser = {
   canParse(input: string): boolean {
-    return JAPANESE_REGEX.test(input);
+    return UNICODE_REGEX.test(input);
   },
   parse(input: string): ParsedHand {
-    if (!JAPANESE_REGEX.test(input)) throw new ParseError();
+    if (!UNICODE_REGEX.test(input)) throw new ParseError();
     const prepared = prepareInput(input);
     let k = 0;
     const groups: ParsedGroup[] = [
@@ -67,7 +76,7 @@ export const JapaneseParser: Parser = {
       const char = prepared[k]
       if (isNumber(char)) {
         const tile: MahjongTile = {
-            tile: JAPANESE_TILES_DICTIONNARY.get(char)!,
+            tile: UNICODE_TILES_DICTIONNARY.get(char)!,
             modificators: winningFlag ? [MahjongTileModificator.WINNING] : [],
           }
         groups.at(-1)!.tiles.push(tile);
@@ -75,7 +84,7 @@ export const JapaneseParser: Parser = {
       if (isModificator(char)) {
         const lastTile = groups.at(-1)!.tiles.at(-1);
         if (lastTile == null) throw new ParseError();
-        lastTile.modificators.push(JAPANESE_MODIFICATORS_DICTIONNARY.get(char)!);
+        lastTile.modificators.push(UNICODE_MODIFICATORS_DICTIONNARY.get(char)!);
       }
       if (isSpace(char)) {
         groups.push({ tiles: [] });
@@ -99,11 +108,11 @@ function prepareInput(input: string): string {
 }
 
 function isNumber(input: string): boolean {
-  return /[1-9➀-➈一二三四五六七八九TN西北R中白]/.test(input);
+  return /[🀙-🀪]/.test(input);
 }
 
-function isModificator(input: string): input is JapaneseModificator {
-  return [...JAPANESE_MODIFICATORS_DICTIONNARY.keys()].includes(input as JapaneseModificator);
+function isModificator(input: string): input is UnicodeModificator {
+  return [...UNICODE_MODIFICATORS_DICTIONNARY.keys()].includes(input as UnicodeModificator);
 }
 
 function isSpace(input: string): input is typeof GROUP_SEPARATOR {
