@@ -4,7 +4,7 @@ import { RoundProps, WINNING_KIND } from '../riichi.model'
 export const Haitei: MixedYaku = {
   name: "Haitei",
   checker: (_, roundProps) => {
-    return (roundProps?.winningKind === WINNING_KIND.TSUMO || roundProps?.winningKind === WINNING_KIND.RINSHAN) && roundProps?.lastTile;
+    return ((roundProps?.winningKind === WINNING_KIND.TSUMO || roundProps?.winningKind === WINNING_KIND.RINSHAN) && roundProps?.lastTile) ?? false;
   }
 }
 

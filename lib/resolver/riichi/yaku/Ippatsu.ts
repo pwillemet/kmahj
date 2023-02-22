@@ -5,7 +5,7 @@ export const Ippatsu: MixedYaku = {
   name: "Ippatsu",
   checker: (_, roundProps) => {
     if (roundProps == null) return false;
-    return roundProps.riichi && roundProps.firstTurnAfterRiichi
+    return (roundProps.riichi && roundProps.firstTurnAfterRiichi) ?? false
   },
 }
 

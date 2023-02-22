@@ -398,7 +398,7 @@ type RoundProps = {
   winningKind?: WINNING_KIND,       // type of winning (tsumo, ron, rinshan, chan kan)
   riichi?: boolean,                 // player declared Riichi
   doubleRiichi?: boolean,           // player declared Riichi on first turn
-  firstTurnAfterRiichi?: boolean,   // player wins on first turn after declaring Riichi (Iipatsu)
+  firstTurnAfterRiichi?: boolean,   // player wins on first turn after declaring Riichi (Ippatsu)
   lastTile?: boolean,               // player wins on last tile
   firstTurn?: boolean               // player wins on first turn
 }
