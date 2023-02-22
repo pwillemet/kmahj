@@ -56,8 +56,8 @@ export const TILE_FAMILY: Record<TileFamilyCode, TileFamilyRef> = {
     code: TileFamilyCode.SEASON,
     category: TILE_FAMILY_CATEGORY.bonus,
   },
-  sen: {
-    code: TileFamilyCode.SEN,
+  sou: {
+    code: TileFamilyCode.SOU,
     category: TILE_FAMILY_CATEGORY.suit,
   },
   suit_restricted_joker: {

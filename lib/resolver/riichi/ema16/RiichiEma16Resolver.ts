@@ -21,7 +21,7 @@ import { RiichiScoreCalculator } from '../ScoreCalculator'
 import { roundUp } from '../../../global/math'
 import { nextTile } from '../utils'
 
-export const Ema16Resolver: Resolver<RiichiMahjongHand, RoundProps> = (parsedHand, roundProps) => {
+export const RiichiEma16Resolver: Resolver<RiichiMahjongHand, RoundProps> = (parsedHand, roundProps) => {
   if (parsedHand.groups.length === 0) return null;
   const mahjongHandWithoutScore = getMahjongHandWithoutScore(parsedHand, roundProps);
   if (mahjongHandWithoutScore == null) return null;

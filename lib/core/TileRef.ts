@@ -1,9 +1,11 @@
 import { TileCode } from './TileCode'
 import { TILE_FAMILY, TileFamilyRef } from './TileFamilyRef'
+import { TileNumber } from './TileNumber'
 
 export type TileRef = {
   code: TileCode;
   family: TileFamilyRef
+  number?: TileNumber;
 }
 
 export function getTileRef(tileCode: TileCode): TileRef {
@@ -13,111 +15,138 @@ export function getTileRef(tileCode: TileCode): TileRef {
 export const TILE: Record<TileCode, TileRef> = {
   1: {
     code: TileCode.PIN_1,
-    family: TILE_FAMILY.pin
+    family: TILE_FAMILY.pin,
+    number: 1
   },
   2: {
     code: TileCode.PIN_2,
-    family: TILE_FAMILY.pin
+    family: TILE_FAMILY.pin,
+    number: 2
   },
   3: {
     code: TileCode.PIN_3,
-    family: TILE_FAMILY.pin
+    family: TILE_FAMILY.pin,
+    number: 3
   },
   4: {
     code: TileCode.PIN_4,
-    family: TILE_FAMILY.pin
+    family: TILE_FAMILY.pin,
+    number : 4
   },
   5: {
     code: TileCode.PIN_5,
-    family: TILE_FAMILY.pin
+    family: TILE_FAMILY.pin,
+    number : 5
   },
   6: {
     code: TileCode.PIN_6,
-    family: TILE_FAMILY.pin
+    family: TILE_FAMILY.pin,
+    number : 6
   },
   7: {
     code: TileCode.PIN_7,
-    family: TILE_FAMILY.pin
+    family: TILE_FAMILY.pin,
+    number : 7
   },
   8: {
     code: TileCode.PIN_8,
-    family: TILE_FAMILY.pin
+    family: TILE_FAMILY.pin,
+    number : 8
   },
   9: {
     code: TileCode.PIN_9,
-    family: TILE_FAMILY.pin
+    family: TILE_FAMILY.pin,
+    number : 9
   },
   11: {
     code: TileCode.SEN_1,
-    family: TILE_FAMILY.sen
+    family: TILE_FAMILY.sou,
+    number : 1
   },
   12: {
     code: TileCode.SEN_2,
-    family: TILE_FAMILY.sen
+    family: TILE_FAMILY.sou,
+    number : 2
   },
   13: {
     code: TileCode.SEN_3,
-    family: TILE_FAMILY.sen
+    family: TILE_FAMILY.sou,
+    number : 3
   },
   14: {
     code: TileCode.SEN_4,
-    family: TILE_FAMILY.sen
+    family: TILE_FAMILY.sou,
+    number : 4
   },
   15: {
     code: TileCode.SEN_5,
-    family: TILE_FAMILY.sen
+    family: TILE_FAMILY.sou,
+    number : 5
   },
   16: {
     code: TileCode.SEN_6,
-    family: TILE_FAMILY.sen
+    family: TILE_FAMILY.sou,
+    number : 6
   },
   17: {
     code: TileCode.SEN_7,
-    family: TILE_FAMILY.sen
+    family: TILE_FAMILY.sou,
+    number : 7
   },
   18: {
     code: TileCode.SEN_8,
-    family: TILE_FAMILY.sen
+    family: TILE_FAMILY.sou,
+    number : 8
   },
   19: {
     code: TileCode.SEN_9,
-    family: TILE_FAMILY.sen
+    family: TILE_FAMILY.sou,
+    number : 9
   },
   21: {
     code: TileCode.MAN_1,
-    family: TILE_FAMILY.man
+    family: TILE_FAMILY.man,
+    number : 1
   },
   22: {
     code: TileCode.MAN_2,
-    family: TILE_FAMILY.man
+    family: TILE_FAMILY.man,
+    number : 2
   },
   23: {
     code: TileCode.MAN_3,
-    family: TILE_FAMILY.man
+    family: TILE_FAMILY.man,
+    number : 3
   },
   24: {
     code: TileCode.MAN_4,
-    family: TILE_FAMILY.man
+    family: TILE_FAMILY.man,
+    number : 4
   },
   25: {
     code: TileCode.MAN_5,
-    family: TILE_FAMILY.man
+    family: TILE_FAMILY.man,
+    number : 5
   },
   26: {
     code: TileCode.MAN_6,
-    family: TILE_FAMILY.man
+    family: TILE_FAMILY.man,
+    number : 6
   },
   27: {
     code: TileCode.MAN_7,
-    family: TILE_FAMILY.man
+    family: TILE_FAMILY.man,
+    number : 7
   },
   28: {
     code: TileCode.MAN_8,
-    family: TILE_FAMILY.man
+    family: TILE_FAMILY.man,
+    number : 8
   },
   29: {
     code: TileCode.MAN_9,
-    family: TILE_FAMILY.man
+    family: TILE_FAMILY.man,
+    number : 9
   },
   31: {
     code: TileCode.EAST,

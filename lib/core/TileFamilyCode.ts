@@ -1,6 +1,6 @@
 export type TileFamilyCode =
   | "pin"
-  | "sen"
+  | "sou"
   | "man"
   | "wind"
   | "dragon"
@@ -16,7 +16,7 @@ export type TileFamilyCode =
 
 export const TileFamilyCode = {
   PIN: "pin" as TileFamilyCode,
-  SEN: "sen" as TileFamilyCode,
+  SOU: "sou" as TileFamilyCode,
   MAN: "man" as TileFamilyCode,
   WIND: "wind" as TileFamilyCode,
   DRAGON: "dragon" as TileFamilyCode,

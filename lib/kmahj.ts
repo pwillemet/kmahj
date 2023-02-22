@@ -1,4 +1,4 @@
-import { Resolver, RiichiMahjongHand, RoundProps, Ema16Resolver } from './resolver'
+import { Resolver, RiichiMahjongHand, RoundProps, RiichiEma16Resolver } from './resolver'
 import { MahjongHand } from './core'
 import { MpszParser, Parser } from './parser'
 
@@ -23,5 +23,5 @@ export class Kmahj<T extends MahjongHand, P extends Object> {
 }
 
 export const kmahj = {
-  ema2016: new Kmahj<RiichiMahjongHand, RoundProps>(Ema16Resolver, MpszParser)
+  riichiEma2016: new Kmahj<RiichiMahjongHand, RoundProps>(RiichiEma16Resolver, MpszParser)
 }

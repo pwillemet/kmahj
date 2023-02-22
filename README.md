@@ -285,7 +285,7 @@ Result
           "tile": {
             "code": 16,
             "family": {
-              "code": "sen",
+              "code": "sou",
               "category": {
                 "code": "suit"
               }
@@ -299,7 +299,7 @@ Result
           "tile": {
             "code": 16,
             "family": {
-              "code": "sen",
+              "code": "sou",
               "category": {
                 "code": "suit"
               }
@@ -313,7 +313,7 @@ Result
           "tile": {
             "code": 16,
             "family": {
-              "code": "sen",
+              "code": "sou",
               "category": {
                 "code": "suit"
               }
@@ -325,7 +325,7 @@ Result
           "tile": {
             "code": 16,
             "family": {
-              "code": "sen",
+              "code": "sou",
               "category": {
                 "code": "suit"
               }
@@ -384,7 +384,7 @@ Example : ➀➁➂➃四四四 5>67 11>1^1 + ➃
 Example : 🀙🀚🀛🀜🀊🀊🀊 🀔*>🀕🀖 🀐v🀐🀐🀐v + 🀜
 
 ## Supported Rules
-### EMA 2016
+### RIICHI EMA 2016
 Based on latest <a href="http://mahjong-europe.org/portal/images/docs/Riichi-rules-2016-EN.pdf">European Riichi rules</a>  
 
 ```

@@ -1,3 +1,3 @@
-export * from "./Ema16Resolver";
+export * from "./RiichiEma16Resolver";
 export * from "./utils";
 export * from "./yaku";
