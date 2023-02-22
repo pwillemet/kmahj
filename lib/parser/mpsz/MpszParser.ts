@@ -2,7 +2,6 @@ import { Parser } from '../Parser.model'
 import { MpszFamily, MpszModificator, MpszParsedTile } from './mpsz.model'
 import { getTileRef, MahjongTile, MahjongTileModificator, TileCode, TileNumberStr, TileRef } from '../../core'
 import { AKA_CHAR, GROUP_SEPARATOR, MPSZ_REGEX, WINNING_TILE_SEPARATOR } from './const'
-import { QUAD_SIZE } from '../../core'
 import { ParseError } from '../error'
 import { ParsedGroup } from '../Parser.model'
 
@@ -103,7 +102,6 @@ export const MpszParser: Parser = {
       }
       k++;
     }
-    checkGroups(groups);
     return { groups };
   }
 }
@@ -140,35 +138,4 @@ function parsedTileToMahjongTile(parsedTile: MpszParsedTile, family: MpszFamily)
   const modificators = parsedTile.modificators.map((m: MpszModificator) => MPDZ_MODIFICATORS_DICTIONNARY[m]);
   if (parsedTile.winning) modificators.push(MahjongTileModificator.WINNING);
   return { tile, modificators };
-}
-
-function checkGroups(groups: ParsedGroup[]): void {
-  groups.forEach((group, i) => checkMpszGroup(group, i));
-}
-
-function checkMpszGroup(mpszGroup: ParsedGroup, index: number): void {
-  if (index === 0) {
-    // First group cannot contains modificators beside AKA
-    const modificatorsInFirstGroup: MahjongTileModificator[][] = mpszGroup.tiles.map(tile => tile.modificators);
-    const containsInvalidModificator = modificatorsInFirstGroup.flat().some(m => m !== MahjongTileModificator.AKA && m !== MahjongTileModificator.WINNING)
-    if (containsInvalidModificator) throw new ParseError("Invalid modificators in first group");
-  } else {
-    // Other groups cannot have more than 4 tiles
-    if (mpszGroup.tiles.length > QUAD_SIZE) throw new ParseError("Invalid group size");
-    const modificators: MahjongTileModificator[][] = mpszGroup.tiles.map(tile => tile.modificators)
-    const allModificators = modificators.flat();
-    // Superposed tile can only be in a Quad and must be unique
-    const invalidSuperposed =
-      mpszGroup.tiles.length !== QUAD_SIZE && allModificators.includes(MahjongTileModificator.SUPERPOSED) ||
-      allModificators.filter(m => m === MahjongTileModificator.SUPERPOSED).length > 1;
-    if (invalidSuperposed) throw new ParseError("Invalid Superposed modificator");
-    // Inclined tile must be unique
-    const invalidInclined = allModificators.filter(m => m === MahjongTileModificator.INCLINED).length > 1;
-    if (invalidInclined) throw new ParseError("Invalid Inclined modificator");
-    // Reverted tile must be in a Quad with no inclined tile
-    const invalidReverted =
-      mpszGroup.tiles.length !== 4 && allModificators.includes(MahjongTileModificator.REVERTED)
-    || allModificators.includes(MahjongTileModificator.REVERTED) && allModificators.includes(MahjongTileModificator.INCLINED);
-    if (invalidReverted) throw new ParseError("Invalid Reverted modificator");
-  }
 }
