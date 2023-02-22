@@ -21,7 +21,9 @@ export type RoundProps = {
   doubleRiichi?: boolean,
   firstTurnAfterRiichi?: boolean,
   lastTile?: boolean,
-  firstTurn?: boolean
+  firstTurn?: boolean,
+  counters?: number,
+  claimableRiichiBets?: number
 }
 
 export type RiichiScore = {

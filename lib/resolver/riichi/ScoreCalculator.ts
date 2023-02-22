@@ -1,59 +1,62 @@
-import { RiichiScore } from './riichi.model'
+import { RiichiScore, RoundProps } from './riichi.model'
 import { roundUp } from '../../global/math'
 
-export function RiichiScoreCalculator(yakuman: number, han: number, fu: number): RiichiScore {
+export function RiichiScoreCalculator(yakuman: number, han: number, fu: number, roundProps?: RoundProps): RiichiScore {
+  const fullCountersScore = (roundProps?.counters ?? 0) * 300;
+  const sharedCountersScore = (roundProps?.counters ?? 0) * 100;
+  const claimableRiichiScore = (roundProps?.claimableRiichiBets ?? 0) * 1000;
   if (yakuman > 0) {
     return {
-      east: 48000 * yakuman,
+      east: 48000 * yakuman + fullCountersScore + claimableRiichiScore,
       other: {
-        ron: 32000 * yakuman,
+        ron: 32000 * yakuman + fullCountersScore + claimableRiichiScore,
         tsumo: {
-          east: 16000 * yakuman,
-          other: 8000 * yakuman
+          east: 16000 * yakuman + sharedCountersScore + claimableRiichiScore,
+          other: 8000 * yakuman + sharedCountersScore + claimableRiichiScore
         }
       }
     }
   } else if (han >= 11) {
     return {
-      east: 36000,
+      east: 36000 + fullCountersScore + claimableRiichiScore,
       other: {
-        ron: 24000,
+        ron: 24000 + fullCountersScore + claimableRiichiScore,
         tsumo: {
-          east: 12000,
-          other: 6000
+          east: 12000 + sharedCountersScore + claimableRiichiScore,
+          other: 6000 + sharedCountersScore + claimableRiichiScore
         }
       }
     }
   } else if (han >= 8) {
     return {
-      east: 24000,
+      east: 24000 + fullCountersScore + claimableRiichiScore,
       other: {
-        ron: 16000,
+        ron: 16000 + fullCountersScore + claimableRiichiScore,
         tsumo: {
-          east: 8000,
-          other: 4000
+          east: 8000 + sharedCountersScore + claimableRiichiScore,
+          other: 4000 + sharedCountersScore + claimableRiichiScore
         }
       }
     }
   } else if (han >= 6) {
     return {
-      east: 18000,
+      east: 18000 + fullCountersScore + claimableRiichiScore,
       other: {
-        ron: 12000,
+        ron: 12000 + fullCountersScore + claimableRiichiScore,
         tsumo: {
-          east: 6000,
-          other: 3000
+          east: 6000 + sharedCountersScore + claimableRiichiScore,
+          other: 3000 + sharedCountersScore + claimableRiichiScore
         }
       }
     }
   } else if (han === 5) {
     return {
-      east: 12000,
+      east: 12000 + fullCountersScore + claimableRiichiScore,
       other: {
-        ron: 8000,
+        ron: 8000 + fullCountersScore + claimableRiichiScore,
         tsumo: {
-          east: 4000,
-          other: 2000
+          east: 4000 + sharedCountersScore + claimableRiichiScore,
+          other: 2000 + sharedCountersScore + claimableRiichiScore
         }
       }
     }
@@ -65,12 +68,12 @@ export function RiichiScoreCalculator(yakuman: number, han: number, fu: number):
     const otherPaymentEast = roundUp(baseFigureEast, 100);
     const eastPayment = roundUp(baseFigureEast * 3, 100);
     return {
-      east: eastPayment,
+      east: eastPayment + fullCountersScore + claimableRiichiScore,
       other: {
-        ron: otherPaymentRon,
+        ron: otherPaymentRon + fullCountersScore + claimableRiichiScore,
         tsumo: {
-          other: otherPaymentOther,
-          east: otherPaymentEast
+          other: otherPaymentOther + sharedCountersScore + claimableRiichiScore,
+          east: otherPaymentEast + sharedCountersScore + claimableRiichiScore
         }
       }
     }

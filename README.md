@@ -344,7 +344,7 @@ Result
 - Use tile numbers followed by a family character
   - p : PIN
   - m : MAN
-  - S : SOU
+  - s : SOU
   - z : ZIHAI (1234 for East-South-West-North, 567 for White-Green-Red)
 - Separate groups with a space
 - Add modificators after a tile number
@@ -400,6 +400,8 @@ type RoundProps = {
   doubleRiichi?: boolean,           // player declared Riichi on first turn
   firstTurnAfterRiichi?: boolean,   // player wins on first turn after declaring Riichi (Ippatsu)
   lastTile?: boolean,               // player wins on last tile
-  firstTurn?: boolean               // player wins on first turn
+  firstTurn?: boolean,              // player wins on first turn
+  counters?: number,                // continuation counters present
+  claimableRiichiBets?: number      // Riichi bets to be claimed by the winner
 }
 ```
