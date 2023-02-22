@@ -10,18 +10,18 @@ export const WINNING_KIND = {
 }
 
 export type RoundProps = {
-  playerWind: TileCode,
-  roundWind: TileCode,
-  dora: TileRef,
-  uraDora: TileRef,
-  winningKind: WINNING_KIND,
-  discard: MahjongTile[],
-  discardTouched: boolean,
-  riichi: boolean,
-  doubleRiichi: boolean,
-  firstTurnAfterRiichi: boolean,
-  lastTile: boolean,
-  firstTurn: boolean
+  playerWind?: TileCode,
+  roundWind?: TileCode,
+  dora?: TileRef[],
+  uraDora?: TileRef[],
+  winningKind?: WINNING_KIND,
+  discard?: MahjongTile[],
+  discardTouched?: boolean,
+  riichi?: boolean,
+  doubleRiichi?: boolean,
+  firstTurnAfterRiichi?: boolean,
+  lastTile?: boolean,
+  firstTurn?: boolean
 }
 
 export type RiichiScore = {
@@ -40,8 +40,9 @@ export type RiichiMahjongHandWithoutScore = MahjongHand & {
   yakuman: number;
   han: number;
   fu: number;
+  dora: number;
 }
 
-export type RiichiMahjongHand = MahjongHand & RiichiMahjongHandWithoutScore & {
+export type RiichiMahjongHand = RiichiMahjongHandWithoutScore & {
   score: RiichiScore;
 }

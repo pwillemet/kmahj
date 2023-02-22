@@ -8,7 +8,7 @@ import {
   KokushiMusou, Pinfu
 } from '../yaku'
 import { RiichiMahjongHand, RiichiMahjongHandWithoutScore, RoundProps, WINNING_KIND } from '../riichi.model'
-import { GroupType, isOrdinary, MahjongGroup, MahjongGroupState, MahjongTileModificator, TILE_FAMILY } from '../../../core'
+import { GroupType, isOrdinary, MahjongGroup, MahjongGroupState, MahjongTile, MahjongTileModificator, TILE_FAMILY } from '../../../core'
 import { ParsedHand } from '../../../parser'
 import {
   EMA16_CLASSIC_YAKUMAN,
@@ -19,6 +19,7 @@ import {
 } from './yaku'
 import { RiichiScoreCalculator } from '../ScoreCalculator'
 import { roundUp } from '../../../global/math'
+import { nextTile } from '../utils'
 
 export const Ema16Resolver: Resolver<RiichiMahjongHand, RoundProps> = (parsedHand, roundProps) => {
   if (parsedHand.groups.length === 0) return null;
@@ -46,7 +47,8 @@ function getMahjongHandWithoutScore(parsedHand: ParsedHand, roundProps?: RoundPr
       han: 0,
       fu: 0,
       yakuman: 1,
-      yaku: [KokushiMusou]
+      yaku: [KokushiMusou],
+      dora: 0
     }
   }
 
@@ -70,7 +72,8 @@ function getMahjongHandWithoutScore(parsedHand: ParsedHand, roundProps?: RoundPr
       han: 0,
       fu: 0,
       yakuman: 1,
-      yaku: [yakuman]
+      yaku: [yakuman],
+      dora: 0
     }
   }
   for (let classicHandPossibility of classicHandPossibilities) {
@@ -80,7 +83,8 @@ function getMahjongHandWithoutScore(parsedHand: ParsedHand, roundProps?: RoundPr
       han: 0,
       fu: 0,
       yakuman: 1,
-      yaku: [yakuman]
+      yaku: [yakuman],
+      dora: 0
     }
   }
 
@@ -95,7 +99,8 @@ function getMahjongHandWithoutScore(parsedHand: ParsedHand, roundProps?: RoundPr
         han,
         yakuman: 0,
         fu: 25,
-        yaku: yakus
+        yaku: yakus,
+        dora: 0
       })
     }
   }
@@ -109,18 +114,24 @@ function getMahjongHandWithoutScore(parsedHand: ParsedHand, roundProps?: RoundPr
         han,
         yakuman: 0,
         fu: countFu(classicHandPossibility.groups as ClassicHandPattern, yakus.map(y => y.name), roundProps),
-        yaku: yakus
+        yaku: yakus,
+        dora: 0,
       })
     }
   }
 
   // Extract best hand
+  if (hands.length === 0) return null;
   hands.sort((h1, h2) => {
     const hanDelta = h1.han - h2.han;
     if (hanDelta !== 0) return hanDelta;
     return h1.fu - h2.fu;
   })
-  return hands.at(-1)!;
+  const bestHand = hands.at(-1)!;
+  const dorasCount = countDoras(tiles, roundProps);
+  bestHand.han += dorasCount;
+  bestHand.dora = dorasCount;
+  return bestHand;
 }
 
 function countFu(groups: ClassicHandPattern, yakus: string[], roundProps?: RoundProps): number {
@@ -157,4 +168,15 @@ function countFu(groups: ClassicHandPattern, yakus: string[], roundProps?: Round
   let total = baseFu + triplesFu + quadsFu + 2 * (+dragonDouble + +playerWindDouble + +roundWindDouble + +doubleWaitWin + +singleSideWaitWin + +middleWaitWin + +tsumoNoPinfu);
   if (total === 20 && groups.some(g => g.state === MahjongGroupState.OPEN)) total += 2; // Open Pinfu
   return roundUp(total, 10);
+}
+
+function countDoras(tiles: MahjongTile[], roundProps?: RoundProps): number {
+  const doraCodes = [...roundProps?.dora ?? [], ...roundProps?.uraDora ?? []]
+    .map(marker => nextTile(marker))
+    .filter(tile => tile != null)
+    .map(tile => tile!.code)
+  if (doraCodes.length === 0) return 0;
+  return tiles
+    .filter(tile => doraCodes.includes(tile.tile.code))
+    .length;
 }

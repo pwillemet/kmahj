@@ -382,3 +382,24 @@ Example : ➀➁➂➃四四四 5>67 11>1^1 + ➃
 - Add the winning tile at the end separated with a +
 
 Example : 🀙🀚🀛🀜🀊🀊🀊 🀔*>🀕🀖 🀐v🀐🀐🀐v + 🀜
+
+## Supported Rules
+### EMA 2016
+Based on latest <a href="http://mahjong-europe.org/portal/images/docs/Riichi-rules-2016-EN.pdf">European Riichi rules</a>  
+
+```
+USABLE PROPERTIES
+
+type RoundProps = {
+  playerWind?: TileCode,            // current seat wind
+  roundWind?: TileCode,             // current prevalent wind
+  dora?: TileRef[],                 // exposed dora markers
+  uraDora?: TileRef[],              // exposed ura dora markers
+  winningKind?: WINNING_KIND,       // type of winning (tsumo, ron, rinshan, chan kan)
+  riichi?: boolean,                 // player declared Riichi
+  doubleRiichi?: boolean,           // player declared Riichi on first turn
+  firstTurnAfterRiichi?: boolean,   // player wins on first turn after declaring Riichi (Iipatsu)
+  lastTile?: boolean,               // player wins on last tile
+  firstTurn?: boolean               // player wins on first turn
+}
+```
